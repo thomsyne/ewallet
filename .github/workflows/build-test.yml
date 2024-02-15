@@ -28,7 +28,7 @@ jobs:
     #     run: npm run build
 
       - name: Send Slack Notifications
-        uses: thomsyne/slack-notification@main
+        uses: thomsyne/slack-notification/@main
         with:
             commitUrl: 'https://github.com/${{ github.repository }}/commit/${{ github.sha }}'
         env:
@@ -39,5 +39,5 @@ jobs:
             SERVICE_NAME: 'API Testing'
             SERVICE_LINK: 'https://nairaland.com'
             SERVICE_TYPE: 'ECS/Fargate'
-            SLACK_WEBHOOK_URL: 'https://hooks.slack.com/services/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'
+            SLACK_WEBHOOK_URL: ${{ vars.SLACK_WEBHOOK_URL}}
 
