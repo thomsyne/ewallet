@@ -28,8 +28,8 @@ export class RegisterComponent implements OnInit {
       first_name: new FormControl('', Validators.required),
       last_name: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
-      confirm_password: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+      password: new FormControl('', [Validators.required]),
+      confirm_password: new FormControl('', [Validators.required]),
       role: new FormControl('user', Validators.required),
       account_status: new FormControl('active', Validators.required),
     })
@@ -55,6 +55,7 @@ export class RegisterComponent implements OnInit {
     this.authService.authSignup(this.registerForm.value).subscribe(
       (res) => {
         this.toastrService.success('User registered successfully')
+        this.registerForm.reset()
       },
       (err) => {
         this.toastrService.error('User registration failed')
