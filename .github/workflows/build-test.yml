@@ -1,0 +1,43 @@
+name: Build Check
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        platform: [ubuntu-latest]
+        node-version: [20.x]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.node-version }}
+
+    #   - name: Install npm dependencies
+    #     run: npm install
+
+    #   - name: Run build
+    #     run: npm run build
+
+      - name: Send Slack Notifications
+        uses: thomsyne/slack-notification/@main
+        with:
+            commitUrl: 'https://github.com/${{ github.repository }}/commit/${{ github.sha }}'
+        env:
+            ENVIRONMENT: staging
+            COLOR_CODE: '008000'
+            DEPLOY_STATUS: 'Deployment successful! 🚀'
+            LOG_STREAM_URL: 'https://google.com'
+            SERVICE_NAME: 'API Testing'
+            SERVICE_LINK: 'https://nairaland.com'
+            SERVICE_TYPE: 'ECS/Fargate'
+            SLACK_WEBHOOK_URL: ${{ vars.SLACK_WEBHOOK_URL}}
+
