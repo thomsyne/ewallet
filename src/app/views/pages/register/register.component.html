@@ -7,36 +7,47 @@
             <form [formGroup]="registerForm" cForm>
               <h1>Register</h1>
               <p class="text-medium-emphasis">Create your account</p>
+
               <c-input-group class="mb-3">
                 <span cInputGroupText>
                   <svg cIcon name="cilUser"></svg>
                 </span>
                 <input type="text" formControlName="first_name" autoComplete="name" cFormControl placeholder="First Name" />
               </c-input-group>
-              <c-input-group class="mb-3">
+              <span *ngIf="registerForm.controls['first_name'].errors && registerForm.controls['first_name'].dirty" class="input-error mb-4">First Name is not valid</span>
+
+              <c-input-group class="my-3">
                 <span cInputGroupText>
                   <svg cIcon name="cilUser"></svg>
                 </span>
                 <input type="text" formControlName="last_name" autoComplete="name" cFormControl placeholder="Last Name" />
               </c-input-group>
-              <c-input-group class="">
+              <span *ngIf="registerForm.controls['last_name'].errors && registerForm.controls['last_name'].dirty" class="input-error mb-4">Last Name is not valid</span>
+
+              <c-input-group class="my-3">
                 <span cInputGroupText>&#64;</span>
                 <input type="email" formControlName="email" autoComplete="email" cFormControl placeholder="Email" />
               </c-input-group>
               <span *ngIf="registerForm.controls['email'].errors && registerForm.controls['email'].dirty" class="input-error mb-4">Email is not valid</span>
+              
               <c-input-group class="my-3">
                 <span cInputGroupText>
                   <svg cIcon name="cilLockLocked"></svg>
                 </span>
                 <input formControlName="password" autoComplete="new-password" cFormControl placeholder="Password" type="password" />
               </c-input-group>
-              <c-input-group class="">
+              <span *ngIf="registerForm.controls['password'].errors && registerForm.controls['password'].dirty" class="input-error mb-4">
+                Password must contain at least 8 characters, including uppercase, lowercase letters, special characters and numbers
+              </span>
+              
+              <c-input-group class="my-3">
                 <span cInputGroupText>
                   <svg cIcon name="cilLockLocked"></svg>
                 </span>
                 <input formControlName="confirm_password" autoComplete="new-password" cFormControl placeholder="Repeat password" type="password" />
               </c-input-group>
               <span *ngIf="!isPasswordMatch && registerForm.controls['confirm_password'].dirty" class="input-error mb-4">Passwords do not match</span>
+              
               <div class="d-grid mt-2">
                 <button (click)="register()" cButton color="success">Create Account</button>
               </div>
