@@ -25,11 +25,11 @@ export class RegisterComponent implements OnInit {
   buildForm(){
 
     this.registerForm = new FormGroup({
-      first_name: new FormControl('', Validators.required),
-      last_name: new FormControl('', Validators.required),
+      first_name: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z]{2,}$/)]),
+      last_name: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z]{2,}$/)]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required]),
-      confirm_password: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&^%()|`~#\[\]{}\\\/:;'",<>.+=\-_])[A-Za-z\d@$!%*?&^%()|`~#\[\]{}\\\/:;'",<>.+=\-_]{8,}$/)]),
+      confirm_password: new FormControl('', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&^%()|`~#\[\]{}\\\/:;'",<>.+=\-_])[A-Za-z\d@$!%*?&^%()|`~#\[\]{}\\\/:;'",<>.+=\-_]{8,}$/)]),
       role: new FormControl('user', Validators.required),
       account_status: new FormControl('active', Validators.required),
     })
@@ -46,12 +46,11 @@ export class RegisterComponent implements OnInit {
       this.toastrService.error('Password does not match')
       return
     }
-
+    
     if (this.registerForm.invalid) {
-      this.toastrService.error('Please fill all the required fields')
+      this.toastrService.error('Form is invalid')
       return
     }
-
     this.authService.authSignup(this.registerForm.value).subscribe(
       (res) => {
         this.toastrService.success('User registered successfully')
