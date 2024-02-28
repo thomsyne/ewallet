@@ -6,7 +6,7 @@ import { HttpHeaders } from "@angular/common/http";
 
 export const environment = {
   production: false,
-  apiUrl: 'https://d18s35nn7dcvpz.cloudfront.net/',
+  apiUrl: 'https://k3aqefqgcp.us-east-2.awsapprunner.com/',
   //apiUrl: 'http://localhost:3000/',
 };
 
