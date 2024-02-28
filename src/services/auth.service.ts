@@ -16,4 +16,10 @@ authSignup(model: any): Observable<any> {
     `${environment.apiUrl}users`, model, HttpOptions
   )
 }
+
+authLogin(model: any): Observable<any> {
+  return this.http.post<any>(
+    `${environment.apiUrl}checkuser`, model, HttpOptions
+  )
+}
 }

@@ -5,29 +5,34 @@
         <c-card-group>
           <c-card class="p-4">
             <c-card-body>
-              <form cForm>
+              <form [formGroup]="loginForm" cForm>
                 <h1>Login</h1>
                 <p class="text-medium-emphasis">Sign In to your account</p>
-                <c-input-group class="mb-3">
+                <c-input-group class="">
                   <span cInputGroupText>
                     <svg cIcon name="cilUser"></svg>
                   </span>
-                  <input autoComplete="username" cFormControl placeholder="Username" />
+                  <input type="email" formControlName="email" autoComplete="email" cFormControl placeholder="Email Address" />
                 </c-input-group>
-                <c-input-group class="mb-4">
+                <span *ngIf="loginForm.controls['email'].errors && loginForm.controls['email'].dirty" class="input-error mb-4">Email is not valid</span>
+                <c-input-group class="mt-4">
                   <span cInputGroupText>
                     <svg cIcon name="cilLockLocked"></svg>
                   </span>
                   <input
+                    formControlName="password"
                     autoComplete="current-password"
                     cFormControl
                     placeholder="Password"
                     type="password"
                   />
                 </c-input-group>
-                <c-row>
+                <span *ngIf="loginForm.controls['password'].errors && loginForm.controls['password'].dirty" class="input-error mb-4">
+                  Password not valid
+                </span>
+                <c-row class="mt-4">
                   <c-col xs="6">
-                    <button cButton class="px-4" color="primary">
+                    <button (click)="login()" cButton class="px-4" color="primary">
                       Login
                     </button>
                   </c-col>

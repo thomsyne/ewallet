@@ -21,3 +21,10 @@ $enable-rtl: true;
 
 // If you want to add something do it here
 @import "custom";
+
+
+.input-error {
+    color: red;
+    margin-bottom: 4em;
+    padding-bottom: 4em;
+}
