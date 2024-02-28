@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/services/auth.service';
 @Component({
@@ -15,6 +16,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private readonly authService: AuthService,
+    private readonly router: Router,
     private readonly toastrService: ToastrService
     ) {}
 
@@ -53,8 +55,9 @@ export class RegisterComponent implements OnInit {
     }
     this.authService.authSignup(this.registerForm.value).subscribe(
       (res) => {
-        this.toastrService.success('User registered successfully')
+        this.toastrService.success('User registered successfully. You can now login.')
         this.registerForm.reset()
+        this.router.navigate(['/login'])
       },
       (err) => {
         this.toastrService.error('User registration failed')
