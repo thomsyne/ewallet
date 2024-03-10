@@ -1,4 +1,4 @@
-import { TransactionComponent } from './transaction.component';
+import { WalletComponent } from './wallet.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -7,9 +7,9 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    component: TransactionComponent,
+    component: WalletComponent,
     data: {
-      title: `Transactions`
+      title: `Wallet`
     }
   }
 ];
@@ -18,5 +18,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TransactionRoutingModule {
+export class WalletRoutingModule {
 }

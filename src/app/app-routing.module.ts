@@ -33,6 +33,11 @@ const routes: Routes = [
           import('./views/transaction/transaction.module').then((m) => m.TransactionModule)
       },
       {
+        path: 'wallet',
+        loadChildren: () =>
+          import('./views/wallet/wallet.module').then((m) => m.WalletModule)
+      },
+      {
         path: 'theme',
         loadChildren: () =>
           import('./views/theme/theme.module').then((m) => m.ThemeModule)

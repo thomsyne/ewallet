@@ -26,13 +26,11 @@ export class WalletService {
     );
   }
 
-  fetchTransactions(params: any): Observable<any> {
-    return this.http.get<any>(
-      `${environment.apiUrl}getTransactions`,
-      {
-        headers: HttpOptions.headers,
-        params
-      }
+  fundWallet(model: any): Observable<any> {
+    return this.http.post<any>(
+      `${environment.apiUrl}fundAccount`,
+      model,
+      HttpOptions
     );
   }
 
