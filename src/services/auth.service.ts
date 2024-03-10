@@ -4,22 +4,24 @@ import { Observable } from 'rxjs';
 import { environment, HttpOptions } from 'src/environment/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
+  constructor(private readonly http: HttpClient) {}
 
-constructor(private readonly http: HttpClient) { }
+  authSignup(model: any): Observable<any> {
+    return this.http.post<any>(
+      `${environment.apiUrl}users`,
+      model,
+      HttpOptions
+    );
+  }
 
-
-authSignup(model: any): Observable<any> {
-  return this.http.post<any>(
-    `${environment.apiUrl}users`, model, HttpOptions
-  )
-}
-
-authLogin(model: any): Observable<any> {
-  return this.http.post<any>(
-    `${environment.apiUrl}checkuser`, model, HttpOptions
-  )
-}
+  authLogin(model: any): Observable<any> {
+    return this.http.post<any>(
+      `${environment.apiUrl}checkuser`,
+      model,
+      HttpOptions
+    );
+  }
 }
