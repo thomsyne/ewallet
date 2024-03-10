@@ -11,6 +11,11 @@ export const navItems: INavData[] = [
     }
   },
   {
+    name: 'Transactions',
+    url: '/transactions',
+    iconComponent: { name: 'cil-money' }
+  },
+  {
     title: true,
     name: 'Theme'
   },
