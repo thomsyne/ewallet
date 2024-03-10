@@ -1,0 +1,134 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header class="d-flex justify-content-between align-items-center">
+        <strong>Fund Wallet</strong> <small></small>
+        <button cButton color="primary" (click)="toggleLiveDemo()">Transfer Funds</button>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          Enter your card details and amount
+        </p>
+        
+        <form [formGroup]="fundForm">
+          <c-row>
+            <c-col [xs]>
+              <label cLabel for="wallet">Name on Card</label>
+              <input minlength="3" formControlName="name" aria-label="Wallet" cFormControl placeholder="Name"/>
+              <span *ngIf="fundForm.controls['name'].errors && fundForm.controls['name'].dirty" class="input-error mb-4">Name is not valid</span>
+            </c-col>
+            <c-col [xs]>
+              <label cLabel for="email">Card No</label>
+              <input maxlength="19" formControlName="cardNo" aria-label="Card Number" cFormControl placeholder="Card Number" (input)="formatCardNumber($event)" />
+              <span *ngIf="fundForm.controls['cardNo'].errors && fundForm.controls['cardNo'].dirty" class="input-error mb-4">Card is not valid</span>
+            </c-col>
+          </c-row>
+
+          <c-row class="mt-4">
+            <c-col [md]="2">
+              <label cLabel for="wallet">Exp Date</label>
+              <input minlength="4" maxlength="4" formControlName="expDate" aria-label="Date" cFormControl placeholder="MMYY"/>
+              <span *ngIf="fundForm.controls['expDate'].errors && fundForm.controls['expDate'].dirty" class="input-error mb-4">Exp Date is not valid</span>
+            </c-col>
+            <c-col [md]="4">
+              <label cLabel for="email">CVV</label>
+              <input minlength="3" maxlength="3" formControlName="cvv" aria-label="CVV" cFormControl placeholder="CVV"/>
+              <span *ngIf="fundForm.controls['cvv'].errors && fundForm.controls['cvv'].dirty" class="input-error mb-4">CVV is not valid</span>
+            </c-col>
+            <c-col [xs]>
+              <label cLabel for="email">Amount</label>
+              <c-input-group class="mb-3">
+                <span cInputGroupText>$</span>
+                <input formControlName="amount" type="number" step="0.01" aria-label="Amount" cFormControl placeholder="Amount" />
+              </c-input-group>
+              <span *ngIf="fundForm.controls['amount'].errors && fundForm.controls['amount'].dirty" class="input-error mb-4">Amount is not valid</span>
+            </c-col>
+          </c-row>
+
+
+            <div class="d-flex w-100 justify-content-end mt-2">
+              <button (click)="checkValues()" cButton color="success">Fund Wallet</button>
+            </div>  
+
+
+        </form>
+        
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
+
+<c-modal size="lg" alignment="center" id="liveDemoModal" [visible]="modalVisible" (visibleChange)="handleLiveDemoChange($event)">
+  <c-modal-header>
+    <h5 cModalTitle>Transfer Funds</h5>
+    <button (click)="toggleLiveDemo()" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+
+    <form [formGroup]="transactionForm" >
+
+      <!-- <p>Choose Email or Wallet Number to get recipient details</p> -->
+      <c-col xs="12">
+        <c-card class="mb-4">
+          <c-card-header>
+            <strong>Choose Email or Wallet Number to get recipient details</strong>
+          </c-card-header>
+          <c-card-body class="d-flex gap-4">
+              <div class="d-flex gap-1">
+                  <input formControlName="radio" type="radio" value="email" />
+                  <label>Email Address</label>
+              </div>
+              <div class="d-flex gap-1">
+                  <input formControlName="radio" type="radio" value="wallet" />
+                  <label>Wallet No</label>
+              </div>
+          </c-card-body>
+        </c-card>
+      </c-col>
+
+      <c-row>
+        <c-col [xs]>
+          <label cLabel for="email">Email address</label>
+          <input class="wallet-input" formControlName="email" aria-label="Email" cFormControl placeholder="Email Address" [readOnly]="transactionForm.value?.radio !== 'email'" />
+          <span *ngIf="transactionForm.controls['email'].errors && transactionForm.controls['email'].dirty" class="input-error mb-4">Email is not valid</span>
+        </c-col>
+        <c-col [xs]>
+          <label cLabel for="wallet">Wallet No</label>
+          <input class="wallet-input" formControlName="wallet_id" aria-label="Wallet" cFormControl placeholder="Wallet No" [readOnly]="transactionForm.value?.radio !== 'wallet'"/>
+          <span *ngIf="transactionForm.controls['wallet_id'].errors && transactionForm.controls['wallet_id'].dirty" class="input-error mb-4">Wallet is not valid</span>
+        </c-col>
+      </c-row>
+
+      <c-row class="my-2" *ngIf="isWalletValid">
+        <c-col [xs]>
+          <label cLabel for="first_name">First Name</label>
+          <input class="wallet-input" formControlName="first_name" aria-label="First name" cFormControl placeholder="First name" readonly/>
+        </c-col>
+        <c-col [xs]>
+          <label cLabel for="last_name">Last Name</label>
+          <input class="wallet-input" formControlName="last_name" aria-label="Last name" cFormControl placeholder="Last name" readonly/>
+        </c-col>
+      </c-row>
+
+      <c-row class="my-2" *ngIf="isWalletValid">
+        <c-col [xs]>
+          <label cLabel for="amount">Amount</label>
+          <c-input-group class="mb-3">
+            <span cInputGroupText>$</span>
+            <input formControlName="amount" step="0.01" type="number" aria-label="Amount" cFormControl placeholder="Amount" />
+          </c-input-group>
+        </c-col>
+        <c-col [xs]>
+          <label cLabel for="narration">Narration</label>
+          <input formControlName="narration" aria-label="Narration" cFormControl placeholder="Narration" />
+        </c-col>
+      </c-row>
+    </form>
+  </c-modal-body>
+  <c-modal-footer>
+    <button (click)="resetModal()" cButton color="danger">
+      Reset
+    </button>
+    <button (click)="isWalletValid ? transferFunds() : fetchRecipientDetails()" cButton [color]="isWalletValid ? 'success' : 'primary'">{{btnText}}</button>
+  </c-modal-footer>
+</c-modal>
