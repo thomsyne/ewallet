@@ -4,6 +4,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Input,
   OnInit,
   ViewChild
 } from '@angular/core';
@@ -17,6 +18,7 @@ import { ChartjsComponent } from '@coreui/angular-chartjs';
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class WidgetsDropdownComponent implements OnInit, AfterContentInit {
+  @Input() userData: any;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef
@@ -47,8 +49,8 @@ export class WidgetsDropdownComponent implements OnInit, AfterContentInit {
       label: 'My First dataset',
       backgroundColor: 'transparent',
       borderColor: 'rgba(255,255,255,.55)',
-      pointBackgroundColor: getStyle('--cui-primary'),
-      pointHoverBorderColor: getStyle('--cui-primary'),
+      pointBackgroundColor: getStyle('--cui-warning'),
+      pointHoverBorderColor: getStyle('--cui-warning'),
       data: [65, 59, 84, 84, 51, 55, 40]
     }], [{
       label: 'My Second dataset',
