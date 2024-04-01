@@ -68,7 +68,7 @@ export class WalletComponent implements OnInit {
     this.walletService.fundWallet(this.fundForm.value).subscribe(
       (res) => {
         if (res.message) {
-          this.toastrService.success(res.message + '. Your new balance is ' + res.newBalance)
+          this.toastrService.success(res.message + '. Your new balance is $' + res.newBalance)
           this.fundForm.reset()
           this.router.navigate(['/transactions'])
         }
@@ -167,8 +167,12 @@ export class WalletComponent implements OnInit {
     this.walletService.transferFunds(form).subscribe(
       (res) => {
         if (res.transactionData) {
-          this.toastrService.success(`Transfer successful. Your new balance is ${res.senderBalance}`)
+          this.toastrService.success(`Transfer successful. Your new balance is $${res.senderBalance}`)
           this.transactionForm.reset()
+          this.transactionForm.controls['radio'].enable()
+          this.transactionForm.patchValue({
+            radio: 'email'
+          })
 
           this.isWalletValid = false;
           this.btnText = 'Fetch Details'
