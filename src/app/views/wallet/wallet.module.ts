@@ -19,7 +19,6 @@ import { IconModule } from '@coreui/icons-angular';
 import { ChartjsModule } from '@coreui/angular-chartjs';
 
 import { WidgetsModule } from '../widgets/widgets.module';
-import { FormsRoutingModule } from '../forms/forms-routing.module';
 import { WalletRoutingModule } from './wallet-routing.module';
 import { WalletComponent } from './wallet.component';
 
@@ -46,7 +45,6 @@ import { WalletComponent } from './wallet.component';
     ModalModule,
     FormModule,
     FormModule,
-    FormsRoutingModule,
   ],
   declarations: [WalletComponent]
 })

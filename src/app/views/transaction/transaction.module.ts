@@ -21,7 +21,6 @@ import { ChartjsModule } from '@coreui/angular-chartjs';
 
 import { WidgetsModule } from '../widgets/widgets.module';
 import { TransactionRoutingModule } from './transaction-routing.module';
-import { FormsRoutingModule } from '../forms/forms-routing.module';
 
 @NgModule({
   imports: [
@@ -46,7 +45,6 @@ import { FormsRoutingModule } from '../forms/forms-routing.module';
     ModalModule,
     FormModule,
     FormModule,
-    FormsRoutingModule,
   ],
   declarations: [TransactionComponent]
 })
