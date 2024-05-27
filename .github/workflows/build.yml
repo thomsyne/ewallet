@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
@@ -26,6 +29,18 @@ jobs:
 
       - name: Run build
         run: npm run build
+
+      - name: Fetch PR Title or Commit Message
+        if: always()
+        id: fetch-info
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            PR_TITLE=$(jq -r '.pull_request.title' < "${{ github.event_path }}")
+            echo "INFO=$PR_TITLE" >> $GITHUB_ENV
+          else
+            COMMIT_MESSAGE=$(jq -r '.head_commit.message' < "${{ github.event_path }}")
+            echo "INFO=${COMMIT_MESSAGE}" >> $GITHUB_ENV
+          fi
 
       - name: Run s3-sync-action
         uses: jakejarvis/s3-sync-action@master
